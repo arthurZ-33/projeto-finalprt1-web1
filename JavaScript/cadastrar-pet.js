@@ -21,3 +21,36 @@ return{
 }
 }
 
+function limpar(){
+    nome.value = "";
+    idade.value = "";
+    raca.value = "";
+    pelo.value = "";
+}
+
+document
+.getElementById("btnEnviar")
+  .addEventListener("click", async function() {
+    const Inputs = getInputs();
+    const dados = getValores(Inputs);
+
+    console.log("Inputs:", Inputs);
+    console.log("Dados", dados);
+    if(!dados.nome || !dados.idade || !dados.pelo || !dados.raca){
+        alert("prencha todos os campos");
+    }
+    try {
+        const ref = await addDoc(collection(db, "pet"), dados);
+        limpar(Inputs);
+        alert("Pet cadastrado com sucesso");
+      } catch (e) {
+        console.log("Erro: ", e);
+      }
+  })
+
+ 
+  
+
+
+
+
