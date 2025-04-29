@@ -102,7 +102,7 @@ async function buscarPet() {
         edicao.editarNome.value = pet.nome;
         edicao.editarIdade.value = pet.idade;
         edicao.editarRaca.value = pet.cargo;
-        dicao.editarPelo.value = pet.pelo   ;
+        edicao.editarPelo.value = pet.pelo;
         edicao.editarId.value = pet.id;
   
         edicao.formularioEdicao.style.display = "block";
