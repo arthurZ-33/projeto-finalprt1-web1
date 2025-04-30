@@ -35,6 +35,7 @@ async function buscarPet() {
           `;
       listaPetDiv.appendChild(petDiv);
     }
+    adicionarListenersDeAcao();
   }
   
   async function carregarListaDePets() {
@@ -91,7 +92,7 @@ async function buscarPet() {
   
       if (btnEditar) {
         const idPet = btnEditar.dataset.id;
-        const pet = await buscarPets(idPet);
+        const pet = await buscarUmPet(idPet);
   
         if (!pet) {
           alert("Pet não encontrado.");
@@ -126,7 +127,7 @@ async function buscarPet() {
     carregarListaDePets();
   });
   
-  async function buscarPets(id) {
+  async function buscarUmPet(id) {
     try {
       const petDoc = doc(db, "pet", id);
       const dadosBanco = await getDoc(petDoc);
@@ -138,8 +139,43 @@ async function buscarPet() {
         return null;
       }
     } catch (erro) {
-      console.log("Erro ao buscar funcionario ID: ", erro);
-      alert("Erro ao buscar o funcionario para a edição");
+      console.log("Erro ao buscar petID: ", erro);
+      alert("Erro ao buscar o pet para a edição");
       return null;
     }
   }
+
+  document.getElementById("btn-Editar").addEventListener("click", async () =>{
+    const edicao = getValoresEditar();
+    const id = edicao.editarId.value;
+    const novoDados = {
+      nome: edicao.editarNome.value.trim(),
+      idade: parseInt(edicao.editarIdade.value),
+      raca: edicao.editarRaca.value.trim(),
+      pelo: edicao.editarPelo.value.trim()
+    };
+
+    try{
+      const ref = doc(db,"pet", id);
+      await setDoc(ref,novoDados);
+      alert("Cadastro atualizado com sucesso!");
+      edicao.formularioEdicao.style.display = "none";
+      carregarListaDePets();
+    }catch (error){
+      console.log("Erro ao salvar edição", error);
+      alert("Erro ao autulizar.");
+    }
+  });
+
+  document.getElementById("btn-Cancelar").addEventListener("click", () =>{
+    document.getElementById("formularioEdicao").style.display = "none";
+  });
+
+  function adicionarListenersDeAcao(){
+  listaPetDiv.addEventListener("click", lidarClique);
+  }
+  
+  document.addEventListener("DOMContentLoaded", carregarListaDePets )
+
+
+
