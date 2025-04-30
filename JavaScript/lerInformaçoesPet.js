@@ -91,17 +91,17 @@ async function buscarPet() {
   
       if (btnEditar) {
         const idPet = btnEditar.dataset.id;
-        const pet = await buscarFuncionario(idPet);
+        const pet = await buscarPets(idPet);
   
         if (!pet) {
-          alert("Funcionario nao encontrado.");
+          alert("Pet não encontrado.");
           return;
         }
         const edicao = getValoresEditar();
   
         edicao.editarNome.value = pet.nome;
         edicao.editarIdade.value = pet.idade;
-        edicao.editarRaca.value = pet.cargo;
+        edicao.editarRaca.value = pet.raca;
         edicao.editarPelo.value = pet.pelo;
         edicao.editarId.value = pet.id;
   
@@ -126,7 +126,7 @@ async function buscarPet() {
     carregarListaDePets();
   });
   
-  async function buscarFuncionario(id) {
+  async function buscarPets(id) {
     try {
       const petDoc = doc(db, "pet", id);
       const dadosBanco = await getDoc(petDoc);
