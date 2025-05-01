@@ -1,13 +1,15 @@
 import{db, app, auth} from './firebaseConfig.js';
 import{getAuth, createUserWithEmailAndPassword, 
-    signInWhithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChagend}
-from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    signInWithEmailAndPassword}
+    from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 
 
+//cadastro
 const emailCadastroInput = document.getElementById("emailCadastro");
 const senhaCadastroInput = document.getElementById("senhaCadastro");
 const btnCadastro = document.getElementById("btnCadastro");
 const mensagemCadastro = document.getElementById("mensagemCadastro");
+
 
 async function cadastrarUsuario(email, senha){
     try {
@@ -55,3 +57,43 @@ async function cadastrarUsuario(email, senha){
         }
     });
   }
+
+
+  //login
+const emailLoginInput = document.getElementById("emailLogin");
+const senhaLoginInput = document.getElementById("senhaLogin");
+const mensagemLogin = document.getElementById("mensagemLogin");
+const btnEntrar = document.getElementById("btnEntrar");
+
+async function loginUsuario(emailLogin,senhaLogin){
+    try{
+        const userCredential = await signInWithEmailAndPassword(auth, emailLogin, senhaLogin);
+        return userCredential.user;
+    }catch (error) {
+        console.log("Ocorreu erro ao logar:", error.code, error.mensage)
+        }
+    }
+
+    if(btnEntrar){
+    btnEntrar.addEventListener("click", async function () {
+        const emailLogin = emailLoginInput.value;
+        const senhaLogin = senhaLoginInput.value;
+        mensagemLogin.textContent = "";
+
+        if(!emailLogin || !senhaLogin){
+            mensagemLogin.textContent= "Por favor preencher ambos";
+            return;
+        }
+    
+    try {
+        const user = await loginUsuario(emailLogin,senhaLogin)
+       console.log("Usuario logado:", user);
+       mensagemLogin.textContent="Logado com sucesso"
+       setTimeout(function(){
+        window.location.href = "./../index.html";
+       },3000);
+    } catch (error) {
+        mensagemLogin.textContent = "Erro ao insirir email ou senha."
+    }
+    })
+    }

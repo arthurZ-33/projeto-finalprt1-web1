@@ -29,7 +29,7 @@ async function buscarPet() {
               <strong> Idade: </strong> ${pet.idade} <br>
               <strong> Raca: </strong> ${pet.raca} <br>
               <strong> Pelo: </strong> ${pet.pelo} <br>
-              <button class="btn-Excluir" data-id="${pet.id}"> Excluir </button>
+              <button class="btnExcluir" data-id="${pet.id}"> Excluir </button>
               <button class="btn-Editar" data-id="${pet.id}"> Editar </button>
               <hr>
           `;
@@ -71,7 +71,7 @@ async function buscarPet() {
   }
   
   async function lidarClique(eventoDeClique) {
-      const btnExcluir = eventoDeClique.target.closest(".btn-Excluir");
+      const btnExcluir = eventoDeClique.target.closest(".btnExcluir");
       if (btnExcluir) {
           const certeza = confirm("tem cetza que deseja fazer essa exclusão: ");
           if (certeza) {
