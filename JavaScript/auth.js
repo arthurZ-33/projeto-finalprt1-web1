@@ -19,7 +19,7 @@ async function cadastrarUsuario(email, senha){
         console.error("Erro ao cadastrar:", error.code, error.message);
         let mensagemErro = "Ocorreu um erro ao cadastrar. Tente novamente:"
         switch(error.code){
-            case 'auth/email-alredy-in-use':
+            case 'auth/email-already-in-use':
             mensagemErro = "Este email ja esta em uso."
             break;
             
@@ -50,7 +50,7 @@ async function cadastrarUsuario(email, senha){
             console.log('Usuário cadastro:', user);
             mensagemCadastro.textContent = 'Cadastro realizada com sucesso!:';
             setTimeout(function(){
-                window.location.href = '../index.html';
+            window.location.href ='./index.html';
             }, 3000);
         }catch (error) {
             mensagemCadastro.textContent = "Erro no cadastro:  ${error.mensage}";
